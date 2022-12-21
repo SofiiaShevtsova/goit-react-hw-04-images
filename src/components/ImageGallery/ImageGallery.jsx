@@ -1,60 +1,41 @@
 import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
-import { Component } from 'react';
+import { useState } from 'react';
 import Modal from 'components/Modal/Modal';
 import StyleList from 'styles/styles';
 
 const { ListOfImagesStyle } = StyleList;
 
-class ImageGallery extends Component {
-  state = {
-    imageList: [],
-    modalImage: null,
-  };
-  componentDidMount() {
-    this.setState({ imageList: this.props.imageList });
-  }
+const ImageGallery = props => {
+  const [modalImage, setModalImage] = useState(null)
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      prevState.imageList === this.state.imageList &&
-      prevProps.imageList !== this.props.imageList
-    ) {
-      this.setState({ imageList: this.props.imageList });
-      return;
-    }
-  }
+  const onImageClick = ImageBig =>
+    setModalImage(ImageBig);
 
-  onImageClick = ImageBig =>
-    this.setState({
-      modalImage: ImageBig,
-    });
-
-  closeModal = event => {
+ const closeModal = event => {
     if (event.target === event.currentTarget || event.key === 'Escape') {
-      this.setState({ modalImage: null });
+      setModalImage(null);
     }
   };
 
-  render() {
     return (
       <>
-        {this.state.modalImage && (
-          <Modal image={this.state.modalImage} closeModal={this.closeModal} />
+        {modalImage && (
+          <Modal image={modalImage} closeModal={closeModal} />
         )}
         <ListOfImagesStyle>
-          {this.state.imageList.map(image => (
+          {props.imageList.map(image => (
             <ImageGalleryItem
               image={image}
               key={image.id}
-              onClick={this.onImageClick}
+              onClick={onImageClick}
             />
           ))}
         </ListOfImagesStyle>
       </>
     );
   }
-}
+
 
 ImageGallery.propTypes = {
   imageList: PropTypes.arrayOf(PropTypes.object),

@@ -7,25 +7,24 @@ const { ModalBackdrop, ModalBox } = StyleList;
 const modalRoot = document.querySelector('#modal-root');
 
 const Modal = props => {
-const {closeModal} = props
+  const { closeModal } = props;
   useEffect(() => {
-    console.log("modal");
     document.addEventListener('keydown', closeModal);
 
     return () => {
-    document.removeEventListener('keydown', closeModal);
+      document.removeEventListener('keydown', closeModal);
     };
   }, [closeModal]);
 
-    return createPortal(
-      <ModalBackdrop onClick={props.closeModal}>
-        <ModalBox>
-          <img src={props.image} alt="#" />
-        </ModalBox>
-      </ModalBackdrop>,
-      modalRoot
-    );
-  }
+  return createPortal(
+    <ModalBackdrop onClick={props.closeModal}>
+      <ModalBox>
+        <img src={props.image} alt="#" />
+      </ModalBox>
+    </ModalBackdrop>,
+    modalRoot
+  );
+};
 
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,

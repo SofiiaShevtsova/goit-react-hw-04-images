@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Modal from 'components/Modal/Modal';
 import StyleList from 'styles/styles';
 
@@ -12,11 +12,11 @@ const ImageGallery = props => {
   const onImageClick = ImageBig =>
     setModalImage(ImageBig);
 
- const closeModal = event => {
+ const closeModal = useCallback(event => {
     if (event.target === event.currentTarget || event.key === 'Escape') {
       setModalImage(null);
     }
-  };
+  }, [setModalImage]) ;
 
     return (
       <>

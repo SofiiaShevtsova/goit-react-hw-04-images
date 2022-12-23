@@ -7,14 +7,15 @@ const { ModalBackdrop, ModalBox } = StyleList;
 const modalRoot = document.querySelector('#modal-root');
 
 const Modal = props => {
-
-  useEffect (() => {
-    document.addEventListener('keydown', props.closeModal);
+const {closeModal} = props
+  useEffect(() => {
+    console.log("modal");
+    document.addEventListener('keydown', closeModal);
 
     return () => {
-    document.removeEventListener('keydown', props.closeModal);
+    document.removeEventListener('keydown', closeModal);
     };
-  }, []);
+  }, [closeModal]);
 
     return createPortal(
       <ModalBackdrop onClick={props.closeModal}>
